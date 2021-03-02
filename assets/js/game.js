@@ -3,16 +3,12 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(playerName);
-console.log(playerHealth, playerAttack, playerMoney);
-console.log("You can put regular sentences in these.");
-
-var enemyName = "Roborto";
+var enemyNames = ["Roberto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 // fight function
-var fight = function() {
+var fight = function(enemyName) {
   
   window.alert("Welcome to Robot Gladiators!");
 
@@ -62,4 +58,13 @@ var fight = function() {
 };
 
 // run fight function to start game
-fight();
+
+for(var i = 0; i <  enemyNames.length; i++) {
+  fight(enemyNames[i]);
+}
+
+// Game States
+// "WIN" - Player robot has defeated all enemy-robots
+//    * Fight all enemy-robots
+//    * Defeat each enemy-robot
+// "LOSE" - Player robot's health is zero or less
