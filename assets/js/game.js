@@ -50,28 +50,43 @@ var endGame = function() {
   }
 };
 
+var fightOrSkip = function() {
+  // ask player if they'd like to fight or skip using fightOrSkip function
+  var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+  promptFight = promptFight.toLowerCase ();
+
+  // Enter the conditional recursive function call here!
+  if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try agian.");
+    return fightOrSkip();
+  }
+
+  // if player picks "skip" confirm and then stop the loop
+  if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    // if yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      // subtract money from playerMoney for skipping
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+      return true;
+    }
+  }
+}
+
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
 
-    // if player picks "skip" confirm and then stop the loop
-    if (promptFight === 'skip' || promptFight === 'SKIP') {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        // subtract money from playerMoney for skipping
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        shop();
-        break;
-      }
+    if (fightOrSkip()) {
+      break;
     }
 
     // remove enemy's health by subtracting the amount set in the playerAttack variable
+
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
     enemy.health = Math.max(0, enemy.health - damage);
     console.log(
@@ -79,21 +94,26 @@ var fight = function(enemy) {
     );
 
     // check enemy's health
+
     if (enemy.health <= 0) {
       window.alert(enemyName + ' has died!');
 
       // award player money for winning
+
       playerInfo.money = playerInfo.money + 20;
 
       // ask if player wants to use the store before next round
+
       var storeConfirm = window.confirm('The fight is over, visit the store before the next round?');
 
       // if yes, take them to the store() function
+
       if (storeConfirm) {
         shop();
       }
 
       // leave while() loop since enemy is dead
+
       break;
     } else {
       window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
