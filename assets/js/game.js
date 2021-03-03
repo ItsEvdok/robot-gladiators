@@ -78,12 +78,20 @@ var fightOrSkip = function() {
 
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
+  var isPLayerTurn = true;
+  if (Math.random() > 0.5) {
+    isPLayerTurn = false;
+  }
   while (playerInfo.health > 0 && enemy.health > 0) {
+
+    if (isPLayerTurn) {
+    // ask player if they'd like to fight or run
+      if (fightOrSkip()) {
+        break;
+      }
+    }
     // ask player if they'd like to fight or run
 
-    if (fightOrSkip()) {
-      break;
-    }
 
     // remove enemy's health by subtracting the amount set in the playerAttack variable
 
@@ -134,6 +142,7 @@ var fight = function(enemy) {
     } else {
       window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
     }
+    isPLayerTurn = !isPLayerTurn
   }
 };
 
@@ -163,6 +172,7 @@ var shop = function() {
       break;
   }
 };
+
 
 var randomNumber = function(min, max) {
   var value = Math.floor(Math.random() * (max - min + 1)) + min;
